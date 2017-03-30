@@ -228,7 +228,7 @@ void flash_erase_chip() {
 }
 
 
-int main(void) {
+void init_hw() {
   // Disable all pull-ups
   MCUCR = PUD;
 
@@ -239,6 +239,20 @@ int main(void) {
   PORTB = 0x00;
   PORTC = 0x03;
   PORTD = 0x00;
+}
+
+#define F_CPU 16000000
+#define BAUD  115200
+#define UBRR F_CPU/16/BAUD-1
+
+
+int main(void) {
+  init_hw();
+
+  UBBR0H = (uint8_t)(UBRR >> 8);
+  UBBR0L = (uint8_t)UBRR;
+  UCSR0B = 0x18; // Enable TX, RX
+  UCSR0C = 0x06; // 8N1
 }
 
 
