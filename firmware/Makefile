@@ -3,6 +3,9 @@ CFLAGS = -mmcu=atmega328
 
 all: programmer.hex
 
+clean:
+	rm -f *.o *.hex *.elf
+
 programmer.elf: main.o
 	$(CC) $(CFLAGS) -o $@ $^
 
