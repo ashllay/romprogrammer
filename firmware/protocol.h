@@ -7,3 +7,4 @@
 
 uint8_t protocol_read_command(uint8_t *buffer);
 void protocol_generate_error_reply(uint8_t err);
+void protocol_write_bytestuffed_reply(uint8_t data_len, uint8_t const* data);
