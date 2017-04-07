@@ -1,5 +1,8 @@
 #pragma once
 
+#include <stdint.h>
+
+
 #define ERROR_NONE      0
 #define ERROR_STUFFING  1
 #define ERROR_CRC       2

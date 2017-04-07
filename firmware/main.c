@@ -1,3 +1,5 @@
+#define F_CPU 16000000
+#include <util/delay.h>
 #include <avr/io.h>
 #include "flash.h"
 #include "uart.h"
@@ -35,6 +37,9 @@ void read_and_exec_command(void) {
 int main(void) {
   init_hw();
   uart_init();
+
+  DDRD |= 0x02;
+  DDRB |= 0x20;
 
   for(;;) {
     read_and_exec_command();
