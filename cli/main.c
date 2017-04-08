@@ -91,9 +91,10 @@ int main() {
     return 1;
   }
 
-  uint8_t cmd = 0;
-  protocol_write_bytestuffed_reply(1, &cmd);
-  uint8_t buf[256];
+  uint8_t buf[256] = {
+    2, 0x55, 0x00, 0x00, 0x00, 1
+  };
+  protocol_write_bytestuffed_reply(6, buf);
   memset(buf, 0, sizeof(buf));
   protocol_read_command(buf);
   for(int i = 0; i < 256; ++i) {
