@@ -7,6 +7,22 @@
 #IncludeRegexTransform: 
 
 /home/flo/Code/romprogrammer/cli/main.c
+stdio.h
+-
+string.h
+-
+unistd.h
+-
+serial.h
+/home/flo/Code/romprogrammer/cli/serial.h
+../common/protocol.h
+/home/flo/Code/romprogrammer/common/protocol.h
+
+/home/flo/Code/romprogrammer/cli/serial.c
+serial.h
+/home/flo/Code/romprogrammer/cli/serial.h
+unistd.h
+-
 string.h
 -
 stdint.h
@@ -22,6 +38,10 @@ fcntl.h
 termios.h
 -
 stdio.h
+-
+
+/home/flo/Code/romprogrammer/cli/serial.h
+stdint.h
 -
 
 /home/flo/Code/romprogrammer/common/protocol.c

@@ -3,7 +3,7 @@
 #include <avr/io.h>
 #include "flash.h"
 #include "uart.h"
-#include "protocol.h"
+#include "../common/protocol.h"
 #include "commands.h"
 
 
@@ -12,11 +12,11 @@ void init_hw(void) {
   MCUCR = PUD;
 
   DDRB = 0x1C;
-  DDRC = 0x03;
+  DDRC = 0x06;
   DDRD = 0x02;
 
   PORTB = 0x00;
-  PORTC = 0x03;
+  PORTC = 0x06;
   PORTD = 0x00;
 }
 
@@ -41,6 +41,10 @@ int main(void) {
   DDRD |= 0x02;
   DDRB |= 0x20;
 
+  flash_set_write_enable(0);
+  flash_set_output_enable(0);
+
+  flash_set_write_mode();
   for(;;) {
     read_and_exec_command();
   }

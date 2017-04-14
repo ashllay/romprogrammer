@@ -1,3 +1,5 @@
+#define F_CPU 16000000
+#include <util/delay.h>
 #include <avr/io.h>
 #include "flash.h"
 #include "shift_register.h"
@@ -65,8 +67,8 @@ uint8_t flash_get_data(void) {
   // DATABIT: 7 6 5 4 3 2 1 0
   // PORT   : D D D D D B B D
   // PORTBIT: 2 3 4 5 6 1 0 7
-  uint8_t D = PORTD;
-  uint8_t B = PORTB;
+  uint8_t D = PIND;
+  uint8_t B = PINB;
 
   #define sb(p, a, b) ((~((!!((p) & (1<<(a))))-1)) & (1<<(b)))
   return    sb(D, 2, 7)
@@ -81,12 +83,13 @@ uint8_t flash_get_data(void) {
 }
 
 
-void flash_set_output_enable(uint8_t enable) {
-  if(!read_mode) { // Make sure I don't ruin ROM or ATMega
-    return;
+int flash_set_output_enable(uint8_t enable) {
+  if(read_mode != enable) { // Make sure I don't ruin ROM or ATMega
+    return 1;
   }
 
   set(FLASH_OEPORT, FLASH_OEBIT, !enable);
+  return 0;
 }
 
 
@@ -97,6 +100,7 @@ void flash_set_write_enable(uint8_t enable) {
 
 void flash_trigger_write(void) {
   flash_set_write_enable(1);
+  _delay_loop_1(1);
   flash_set_write_enable(0);
 }
 
@@ -111,7 +115,7 @@ void flash_set_read_mode(void) {
 
 
 void flash_set_write_mode(void) {
-  // Force flash data bus to Hi-Z
+  // Force data bus pins on Flash chip to Hi-Z
   flash_set_output_enable(0);
 
   // Switch pins to output
@@ -146,6 +150,8 @@ void flash_attention(void) {
 
 
 void flash_exec_function(uint8_t func) {
+  flash_set_write_mode();
+  flash_set_output_enable(0);
   flash_attention();
   flash_load(0x5555, func);
 }

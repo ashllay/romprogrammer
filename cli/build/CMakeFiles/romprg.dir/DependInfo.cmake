@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/home/flo/Code/romprogrammer/common/protocol.c" "/home/flo/Code/romprogrammer/cli/build/CMakeFiles/romprg.dir/home/flo/Code/romprogrammer/common/protocol.c.o"
   "/home/flo/Code/romprogrammer/cli/main.c" "/home/flo/Code/romprogrammer/cli/build/CMakeFiles/romprg.dir/main.c.o"
+  "/home/flo/Code/romprogrammer/cli/serial.c" "/home/flo/Code/romprogrammer/cli/build/CMakeFiles/romprg.dir/serial.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

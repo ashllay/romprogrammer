@@ -177,6 +177,33 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/romprg.dir/build.make CMakeFiles/romprg.dir/main.c.s
 .PHONY : main.c.s
 
+serial.o: serial.c.o
+
+.PHONY : serial.o
+
+# target to build an object file
+serial.c.o:
+	$(MAKE) -f CMakeFiles/romprg.dir/build.make CMakeFiles/romprg.dir/serial.c.o
+.PHONY : serial.c.o
+
+serial.i: serial.c.i
+
+.PHONY : serial.i
+
+# target to preprocess a source file
+serial.c.i:
+	$(MAKE) -f CMakeFiles/romprg.dir/build.make CMakeFiles/romprg.dir/serial.c.i
+.PHONY : serial.c.i
+
+serial.s: serial.c.s
+
+.PHONY : serial.s
+
+# target to generate assembly for a file
+serial.c.s:
+	$(MAKE) -f CMakeFiles/romprg.dir/build.make CMakeFiles/romprg.dir/serial.c.s
+.PHONY : serial.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -192,6 +219,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... serial.o"
+	@echo "... serial.i"
+	@echo "... serial.s"
 .PHONY : help
 
 

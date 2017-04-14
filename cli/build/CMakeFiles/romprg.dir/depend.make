@@ -5,4 +5,9 @@ CMakeFiles/romprg.dir/home/flo/Code/romprogrammer/common/protocol.c.o: /home/flo
 CMakeFiles/romprg.dir/home/flo/Code/romprogrammer/common/protocol.c.o: /home/flo/Code/romprogrammer/common/protocol.h
 
 CMakeFiles/romprg.dir/main.c.o: ../main.c
+CMakeFiles/romprg.dir/main.c.o: ../serial.h
+CMakeFiles/romprg.dir/main.c.o: /home/flo/Code/romprogrammer/common/protocol.h
+
+CMakeFiles/romprg.dir/serial.c.o: ../serial.c
+CMakeFiles/romprg.dir/serial.c.o: ../serial.h
 

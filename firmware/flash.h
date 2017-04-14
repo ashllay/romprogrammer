@@ -5,7 +5,7 @@ void flash_set_address(uint32_t addr);
 void flash_set_direction(uint8_t inout);
 void flash_set_data(uint8_t data);
 uint8_t flash_get_data(void);
-void flash_set_output_enable(uint8_t enable);
+int flash_set_output_enable(uint8_t enable);
 void flash_set_write_enable(uint8_t enable);
 void flash_trigger_write(void);
 void flash_set_read_mode(void);
