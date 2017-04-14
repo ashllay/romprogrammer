@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 typedef struct {
   uint8_t  packet_length;
   uint8_t  command_id;

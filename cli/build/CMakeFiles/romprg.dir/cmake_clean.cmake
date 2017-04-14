@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/romprg.dir/main.c.o"
   "CMakeFiles/romprg.dir/home/flo/Code/romprogrammer/common/protocol.c.o"
   "CMakeFiles/romprg.dir/serial.c.o"
+  "CMakeFiles/romprg.dir/commands.c.o"
   "romprg.pdb"
   "romprg"
 )

@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/flo/Code/romprogrammer/cli/commands.c" "/home/flo/Code/romprogrammer/cli/build/CMakeFiles/romprg.dir/commands.c.o"
   "/home/flo/Code/romprogrammer/common/protocol.c" "/home/flo/Code/romprogrammer/cli/build/CMakeFiles/romprg.dir/home/flo/Code/romprogrammer/common/protocol.c.o"
   "/home/flo/Code/romprogrammer/cli/main.c" "/home/flo/Code/romprogrammer/cli/build/CMakeFiles/romprg.dir/main.c.o"
   "/home/flo/Code/romprogrammer/cli/serial.c" "/home/flo/Code/romprogrammer/cli/build/CMakeFiles/romprg.dir/serial.c.o"

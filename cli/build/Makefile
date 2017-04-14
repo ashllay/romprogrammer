@@ -123,6 +123,33 @@ romprg/fast:
 	$(MAKE) -f CMakeFiles/romprg.dir/build.make CMakeFiles/romprg.dir/build
 .PHONY : romprg/fast
 
+commands.o: commands.c.o
+
+.PHONY : commands.o
+
+# target to build an object file
+commands.c.o:
+	$(MAKE) -f CMakeFiles/romprg.dir/build.make CMakeFiles/romprg.dir/commands.c.o
+.PHONY : commands.c.o
+
+commands.i: commands.c.i
+
+.PHONY : commands.i
+
+# target to preprocess a source file
+commands.c.i:
+	$(MAKE) -f CMakeFiles/romprg.dir/build.make CMakeFiles/romprg.dir/commands.c.i
+.PHONY : commands.c.i
+
+commands.s: commands.c.s
+
+.PHONY : commands.s
+
+# target to generate assembly for a file
+commands.c.s:
+	$(MAKE) -f CMakeFiles/romprg.dir/build.make CMakeFiles/romprg.dir/commands.c.s
+.PHONY : commands.c.s
+
 home/flo/Code/romprogrammer/common/protocol.o: home/flo/Code/romprogrammer/common/protocol.c.o
 
 .PHONY : home/flo/Code/romprogrammer/common/protocol.o
@@ -213,6 +240,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... romprg"
+	@echo "... commands.o"
+	@echo "... commands.i"
+	@echo "... commands.s"
 	@echo "... home/flo/Code/romprogrammer/common/protocol.o"
 	@echo "... home/flo/Code/romprogrammer/common/protocol.i"
 	@echo "... home/flo/Code/romprogrammer/common/protocol.s"

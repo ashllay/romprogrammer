@@ -5,4 +5,5 @@ add_executable(romprg
   main.c
   ../common/protocol.c
   serial.c
+  commands.c
 )
