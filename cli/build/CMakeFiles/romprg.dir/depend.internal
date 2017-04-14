@@ -16,6 +16,7 @@ CMakeFiles/romprg.dir/main.c.o
  /home/flo/Code/romprogrammer/cli/serial.h
  /home/flo/Code/romprogrammer/common/protocol.h
  /home/flo/Code/romprogrammer/common/replies.h
+ /home/flo/Code/romprogrammer/firmware/version.h
 CMakeFiles/romprg.dir/serial.c.o
  /home/flo/Code/romprogrammer/cli/serial.c
  /home/flo/Code/romprogrammer/cli/serial.h

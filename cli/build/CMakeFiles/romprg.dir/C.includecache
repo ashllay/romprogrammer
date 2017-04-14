@@ -21,6 +21,10 @@ commands.h
 /home/flo/Code/romprogrammer/common/replies.h
 
 /home/flo/Code/romprogrammer/cli/main.c
+errno.h
+-
+stdlib.h
+-
 stdio.h
 -
 string.h
@@ -31,6 +35,8 @@ serial.h
 /home/flo/Code/romprogrammer/cli/serial.h
 ../common/protocol.h
 /home/flo/Code/romprogrammer/common/protocol.h
+../firmware/version.h
+/home/flo/Code/romprogrammer/firmware/version.h
 commands.h
 /home/flo/Code/romprogrammer/cli/commands.h
 
@@ -77,4 +83,6 @@ stdint.h
 /home/flo/Code/romprogrammer/common/replies.h
 stdint.h
 -
+
+/home/flo/Code/romprogrammer/firmware/version.h
 

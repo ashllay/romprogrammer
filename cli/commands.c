@@ -4,21 +4,31 @@
 #include "commands.h"
 
 
-ReplyPing command_ping() {
+uint8_t command_ping(ReplyPing *ping) {
   uint8_t cmd = CMD_ping;
   protocol_write_packet(sizeof(cmd), &cmd);
   uint8_t buffer[sizeof(ReplyPing) + 3];
-  protocol_read_packet(sizeof(buffer), buffer);
-  return *(ReplyPing const*)(buffer+1);
+  uint8_t err = protocol_read_packet(sizeof(buffer), buffer);
+  if(err != ERROR_NONE) {
+    return err;
+  }
+
+  *ping = *(ReplyPing const*)(buffer+1);
+  return ping->error_code;
 }
 
 
-ReplyIdentify command_identify() {
+uint8_t command_identify(ReplyIdentify *identify) {
   uint8_t cmd = CMD_identify;
   protocol_write_packet(sizeof(cmd), &cmd);
   uint8_t buffer[sizeof(ReplyIdentify) + 3];
-  protocol_read_packet(sizeof(buffer), buffer);
-  return *(ReplyIdentify const*)(buffer+1);
+  uint8_t err = protocol_read_packet(sizeof(buffer), buffer);
+  if(err != ERROR_NONE) {
+    return err;
+  }
+  
+  *identify = *(ReplyIdentify const*)(buffer+1);
+  return identify->error_code;
 }
 
 
@@ -99,7 +109,6 @@ uint8_t command_write(uint32_t start_address, uint8_t len, uint8_t const* buffer
   protocol_write_packet(sizeof(cmd), (uint8_t const*)&cmd);
 
   uint8_t reply[4];
-  printf("XX:%d\n", sizeof(cmd));
   int err = protocol_read_packet(sizeof(reply), (uint8_t*)&reply);
   if(err != ERROR_NONE) {
     return err;
