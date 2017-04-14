@@ -189,7 +189,8 @@ void flash_wait_dq7(uint8_t addr, uint8_t value) {
 void flash_write_byte(uint32_t addr, uint8_t byte) {
   flash_exec_function(0xA0);
   flash_load(addr, byte);
-  flash_wait_dq7(addr, byte & 0x80);
+  //flash_wait_dq7(addr, byte & 0x80);
+  _delay_us(30);
 }
 
 

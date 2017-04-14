@@ -135,8 +135,8 @@ void command_erase_sector(unsigned data_size, uint8_t const* cmd) {
     return;
   }
 
-  if((erase_command->start_addr & (PROGRAMMER_ROM_SIZE-1)) != 0
-      || (erase_command->end_addr & (PROGRAMMER_ROM_SIZE-1)) != 0) {
+  if((erase_command->start_addr & (PROGRAMMER_SECTOR_SIZE-1)) != 0
+      || (erase_command->end_addr & (PROGRAMMER_SECTOR_SIZE-1)) != 0) {
     command_generate_error_reply(ERROR_ADDR);
     return;
   }

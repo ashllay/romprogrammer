@@ -110,8 +110,33 @@ uint8_t command_write(uint32_t start_address, uint8_t len, uint8_t const* buffer
 
 
 uint8_t command_erase_sector(uint32_t start_address, uint32_t end_address) {
+  struct {
+    uint8_t  cmd_id;
+    uint32_t start_addr;
+    uint32_t  end_addr;
+  } __attribute__((packed)) cmd = {
+    .cmd_id     = CMD_erase_sector,
+    .start_addr = start_address,
+    .end_addr   = end_address
+  };
+
+  protocol_write_packet(sizeof(cmd), &cmd);
+  uint8_t buffer[4];
+  int err = protocol_read_packet(sizeof(buffer), buffer);
+  if(err != ERROR_NONE) {
+    return err;
+  }
+  return buffer[1];
 }
 
 
 uint8_t command_erase_chip() {
+  uint8_t cmd = CMD_erase_chip;
+  protocol_write_packet(sizeof(cmd), &cmd);
+  uint8_t buffer[4];
+  int err = protocol_read_packet(sizeof(buffer), buffer);
+  if(err != ERROR_NONE) {
+    return err;
+  }
+  return buffer[1];
 }
