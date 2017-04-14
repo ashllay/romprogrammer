@@ -1,5 +1,5 @@
 CC = avr-gcc
-CFLAGS = -mmcu=atmega328p -std=c99 -O1
+CFLAGS = -mmcu=atmega328p -std=c99 -O1 -Wall
 LDFLAGS = -mmcu=atmega328p
 
 all: programmer.hex

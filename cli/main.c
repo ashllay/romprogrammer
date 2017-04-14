@@ -43,7 +43,7 @@ int main() {
     printf("%02x ", buf[i]);
   }
   printf("\n");
-#elif 0
+#elif 1
   uint8_t cmd[] = {1};
   uint8_t buf[256];
   protocol_write_bytestuffed_reply(sizeof(cmd), cmd);

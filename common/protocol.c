@@ -111,6 +111,8 @@ uint8_t protocol_read_bytestuffed_command(uint8_t *buffer) {
     return ERROR_COMMAND;
   }
 
+  buffer[0] -= sizeof(crc);
+
   return ERROR_NONE;
 }
 
