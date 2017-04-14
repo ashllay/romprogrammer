@@ -95,14 +95,16 @@ void command_crc(unsigned data_size, uint8_t const* cmd) {
 
 
 void command_write(unsigned data_size, uint8_t const* cmd) {
-  if(data_size < sizeof(CommandWrite) + 1) {
+
+  if(data_size < sizeof(CommandWrite)+1) {
     command_generate_error_reply(ERROR_LENGTH);
     return;
   }
 
+  uint8_t write_len = data_size - sizeof(CommandWrite);
+
   CommandWrite const *write_command = (CommandWrite const*)cmd;
 
-  uint8_t write_len = data_size - sizeof(CommandWrite);
 
   if(write_command->write_addr + write_len > PROGRAMMER_ROM_SIZE) {
     command_generate_error_reply(ERROR_ADDR);

@@ -89,6 +89,11 @@ int main() {
   printf("CRC:\n");
   printf("  err: %4d\n", err2);
   printf("  crc: %02X\n", crc.crc);
+
+  uint8_t data2[11] = "HALLO,FLO!";
+  err2 = command_write(1, 10, &data2);
+  printf("Write:\n");
+  printf("  err: %4d\n", err2);
 #endif
 
   close_serial();

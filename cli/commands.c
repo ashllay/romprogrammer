@@ -26,7 +26,7 @@ uint8_t command_read(uint32_t start_address, uint8_t len, uint8_t *buffer) {
   struct {
     uint8_t cmd_id;
     CommandRead data;
-  } cmd = {
+  } __attribute__((packed)) cmd = {
     .cmd_id = CMD_read,
     .data = {
       .read_addr = start_address,
@@ -54,7 +54,7 @@ uint8_t command_crc(uint32_t start_address, uint32_t end_address, ReplyCRC *crc)
   struct {
     uint8_t cmd_id;
     CommandCRC data;
-  } cmd = {
+  } __attribute__((packed)) cmd = {
     .cmd_id = CMD_crc,
     .data = {
       .start_addr = start_address,
@@ -68,7 +68,7 @@ uint8_t command_crc(uint32_t start_address, uint32_t end_address, ReplyCRC *crc)
     uint8_t len;
     ReplyCRC crc;
     uint16_t pkt_crc;
-  } reply;
+  } __attribute__((packed)) reply;
 
   int err = protocol_read_packet(sizeof(reply), (uint8_t*)&reply);
   if(err != ERROR_NONE) {
@@ -86,6 +86,26 @@ uint8_t command_crc(uint32_t start_address, uint32_t end_address, ReplyCRC *crc)
 
 
 uint8_t command_write(uint32_t start_address, uint8_t len, uint8_t const* buffer) {
+  struct {
+    uint8_t  cmd_id;
+    uint32_t write_addr;
+    uint8_t  data[len];
+  } __attribute__((packed)) cmd;
+
+  cmd.cmd_id = CMD_write;
+  cmd.write_addr = start_address;
+  memcpy(cmd.data, buffer, len);
+
+  protocol_write_packet(sizeof(cmd), (uint8_t const*)&cmd);
+
+  uint8_t reply[4];
+  printf("XX:%d\n", sizeof(cmd));
+  int err = protocol_read_packet(sizeof(reply), (uint8_t*)&reply);
+  if(err != ERROR_NONE) {
+    return err;
+  }
+
+  return reply[1];
 }
 
 
