@@ -185,12 +185,89 @@ err:
 
 
 int cmd_verify(int argc, char **argv) {
+  if(argc != 2) {
+    fprintf(stderr, "Invalid arguments to 'verify' command\n");
+    return 1;
+  }
 
+  uint32_t start = strtoul(argv[0], NULL, 0);
+
+  FILE* infile = fopen(argv[1], "rb");
+  if(!infile) {
+    perror(argv[2]);
+    return 1;
+  }
+
+  fseek(infile, 0, SEEK_END);
+  uint32_t size = (uint32_t)ftell(infile);
+  rewind(infile);
+
+  int err = 0;
+  uint32_t end = start + size;
+  if(check_address_range(start, end)) {
+    err = 1;
+    goto err;
+  }
+
+  for(; start < end; start += PROGRAMMER_MAX_LEN) {
+    uint8_t file_buf[PROGRAMMER_MAX_LEN];
+    uint8_t rom_buf[PROGRAMMER_MAX_LEN];
+
+    uint32_t remaining = end-start;
+    uint8_t count = (remaining >= PROGRAMMER_MAX_LEN) ? PROGRAMMER_MAX_LEN : remaining;
+
+    if(fread(file_buf, 1, count, infile) != count) {
+      fprintf(stderr, "Failed to read input file\n");
+      err = 1;
+      goto err;
+    }
+
+    printf("\rVerifying 0x%06x-0x%06x", start, start+count-1);
+    fflush(stdout);
+    uint8_t err = command_read(start, count, rom_buf);
+    if(err != ERROR_NONE) {
+      print_system_error(err);
+      err = 1;
+      goto err;
+    }
+
+    if(memcmp(file_buf, rom_buf, count)) {
+      printf("\nVerification failed.\n");
+      err = 2;
+      goto err;
+    }
+  }
+
+  printf("\nVerification passed.\n");
+
+err:
+  fclose(infile);
+  return err;
 }
 
 
 int cmd_crc(int argc, char **argv) {
+  if(argc != 2) {
+    fprintf(stderr, "Invalid arguments to 'crc' command\n");
+    return 1;
+  }
 
+  uint32_t start = strtoul(argv[0], NULL, 0);
+  uint32_t end   = strtoul(argv[1], NULL, 0);
+
+  if(check_address_range(start, end)) {
+    return 1;
+  }
+
+  ReplyCRC crc;
+  uint8_t err = command_crc(start, end, &crc);
+  if(err) {
+    print_system_error(err);
+    return 1;
+  }
+
+  printf("CRC16_CCITT(0x%06x-0x%06x) = 0x%02hX\n", crc.crc);
+  return 0;
 }
 
 
