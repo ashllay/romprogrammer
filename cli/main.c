@@ -46,10 +46,10 @@ int main() {
 #elif 1
   uint8_t cmd[] = {1};
   uint8_t buf[256];
-  protocol_write_bytestuffed_reply(sizeof(cmd), cmd);
+  protocol_write_packet(sizeof(cmd), cmd);
   printf("CMD1 sent\n");
   memset(buf, 0, sizeof(buf));
-  protocol_read_command(buf);
+  protocol_read_packet(sizeof(buf), buf);
   for(int i = 0; i < 256; ++i) {
     printf("%02x ", buf[i]);
   }

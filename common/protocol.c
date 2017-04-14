@@ -41,7 +41,7 @@ void protocol_write_start_byte() {
 }
 
 
-void protocol_write_bytestuffed_reply(uint8_t data_len, uint8_t const* data) {
+void protocol_write_packet(uint8_t data_len, uint8_t const* data) {
   protocol_write_start_byte();
 
   uint16_t crc =_crc_ccitt_update(0, data_len + 3);
@@ -54,11 +54,6 @@ void protocol_write_bytestuffed_reply(uint8_t data_len, uint8_t const* data) {
 
   protocol_write_bytestuffed_byte(crc & 0xFF);
   protocol_write_bytestuffed_byte((crc >> 8) & 0xFF);
-}
-
-
-void protocol_generate_error_reply(uint8_t err) {
-  protocol_write_bytestuffed_reply(1, &err);
 }
 
 
@@ -90,11 +85,20 @@ uint8_t protocol_read_bytestuffed_byte(uint8_t *out) {
 }
 
 
-uint8_t protocol_read_bytestuffed_command(uint8_t *buffer) {
-  uint16_t crc = 0;
+uint8_t protocol_read_bytestuffed_packet(unsigned buffer_size, uint8_t *buffer) {
+  if(buffer_size < 4) {
+    return ERROR_LENGTH;
+  }
 
-  buffer[0] = 1;
-  for(uint16_t write_index = 0; write_index < buffer[0]; ++write_index) {
+
+  // TODO error handling
+  protocol_read_bytestuffed_byte(buffer);
+  uint16_t crc = _crc_ccitt_update(0, buffer[0]);
+  if(buffer[0] > buffer_size) {
+    return ERROR_LENGTH;
+  }
+
+  for(uint16_t write_index = 1; write_index < buffer[0]; ++write_index) {
     uint8_t err = protocol_read_bytestuffed_byte(buffer + write_index);
     if(err != ERROR_NONE) {
       return err;
@@ -128,7 +132,7 @@ uint8_t protocol_read_bytestuffed_command(uint8_t *buffer) {
 
   buffer contains everything beginning with LEN and including CRC
 */
-uint8_t protocol_read_command(uint8_t *buffer) {
+uint8_t protocol_read_packet(unsigned buffer_size, uint8_t *buffer) {
   protocol_wait_for_start_byte();
-  return protocol_read_bytestuffed_command(buffer);
+  return protocol_read_bytestuffed_packet(buffer_size, buffer);
 }

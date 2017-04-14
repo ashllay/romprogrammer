@@ -7,7 +7,9 @@
 #define ERROR_STUFFING  1
 #define ERROR_CRC       2
 #define ERROR_COMMAND   3
+#define ERROR_ADDR      4
+#define ERROR_LENGTH    5
+#define ERROR_TEST_MODE 6
 
-uint8_t protocol_read_command(uint8_t *buffer);
-void protocol_generate_error_reply(uint8_t err);
-void protocol_write_bytestuffed_reply(uint8_t data_len, uint8_t const* data);
+uint8_t protocol_read_packet(unsigned buffer_size, uint8_t *buffer);
+void protocol_write_packet(uint8_t data_len, uint8_t const* data);
