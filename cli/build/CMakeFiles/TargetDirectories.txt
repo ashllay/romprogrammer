@@ -1,3 +1,0 @@
-/home/flo/Code/romprogrammer/cli/build/CMakeFiles/edit_cache.dir
-/home/flo/Code/romprogrammer/cli/build/CMakeFiles/rebuild_cache.dir
-/home/flo/Code/romprogrammer/cli/build/CMakeFiles/romprg.dir
