@@ -19,7 +19,7 @@ Schematic and layout were made in [KiCad EDA](http://kicad-pcb.org/). You can us
 #### Parts
 
 * Whatever PCB material you want to use
-* 3x 74HC595 serial in, parellel out shift registers (Dual Inline Package)
+* 3x 74HC595 serial in, parallel out shift registers (Dual Inline Package)
 * 1x 32 Pin JEDEC DIL chip socket (ZIF, if you want to make your life easier)
 * 2x 15 Pin female pin headers (for the Arduino Nano)
 * 1x Arduino Nano
