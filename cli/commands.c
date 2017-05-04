@@ -4,13 +4,13 @@
 #include "commands.h"
 
 
-uint8_t command_ping(ReplyPing *ping) {
+int command_ping(ReplyPing *ping) {
   uint8_t cmd = CMD_ping;
   protocol_write_packet(sizeof(cmd), &cmd);
   uint8_t buffer[sizeof(ReplyPing) + 3];
   uint8_t err = protocol_read_packet(sizeof(buffer), buffer);
   if(err != ERROR_NONE) {
-    return err;
+    return err | ERROR_LOCAL;
   }
 
   *ping = *(ReplyPing const*)(buffer+1);
@@ -18,13 +18,13 @@ uint8_t command_ping(ReplyPing *ping) {
 }
 
 
-uint8_t command_identify(ReplyIdentify *identify) {
+int command_identify(ReplyIdentify *identify) {
   uint8_t cmd = CMD_identify;
   protocol_write_packet(sizeof(cmd), &cmd);
   uint8_t buffer[sizeof(ReplyIdentify) + 3];
   uint8_t err = protocol_read_packet(sizeof(buffer), buffer);
   if(err != ERROR_NONE) {
-    return err;
+    return err | ERROR_LOCAL;
   }
   
   *identify = *(ReplyIdentify const*)(buffer+1);
@@ -32,7 +32,7 @@ uint8_t command_identify(ReplyIdentify *identify) {
 }
 
 
-uint8_t command_read(uint32_t start_address, uint8_t len, uint8_t *buffer) {
+int command_read(uint32_t start_address, uint8_t len, uint8_t *buffer) {
   struct {
     uint8_t cmd_id;
     CommandRead data;
@@ -47,7 +47,7 @@ uint8_t command_read(uint32_t start_address, uint8_t len, uint8_t *buffer) {
   uint8_t reply[len + 4];
   int err = protocol_read_packet(sizeof(reply), reply);
   if(err != ERROR_NONE) {
-    return err;
+    return err | ERROR_LOCAL;
   }
 
   if(reply[1] != ERROR_NONE) {
@@ -60,7 +60,7 @@ uint8_t command_read(uint32_t start_address, uint8_t len, uint8_t *buffer) {
 }
 
 
-uint8_t command_crc(uint32_t start_address, uint32_t end_address, ReplyCRC *crc) {
+int command_crc(uint32_t start_address, uint32_t end_address, ReplyCRC *crc) {
   struct {
     uint8_t cmd_id;
     CommandCRC data;
@@ -82,7 +82,7 @@ uint8_t command_crc(uint32_t start_address, uint32_t end_address, ReplyCRC *crc)
 
   int err = protocol_read_packet(sizeof(reply), (uint8_t*)&reply);
   if(err != ERROR_NONE) {
-    return err;
+    return err | ERROR_LOCAL;
   }
 
   if(reply.crc.error_code != ERROR_NONE) {
@@ -95,7 +95,7 @@ uint8_t command_crc(uint32_t start_address, uint32_t end_address, ReplyCRC *crc)
 }
 
 
-uint8_t command_write(uint32_t start_address, uint8_t len, uint8_t const* buffer) {
+int command_write(uint32_t start_address, uint8_t len, uint8_t const* buffer) {
   struct {
     uint8_t  cmd_id;
     uint32_t write_addr;
@@ -111,14 +111,14 @@ uint8_t command_write(uint32_t start_address, uint8_t len, uint8_t const* buffer
   uint8_t reply[4];
   int err = protocol_read_packet(sizeof(reply), (uint8_t*)&reply);
   if(err != ERROR_NONE) {
-    return err;
+    return err | ERROR_LOCAL;
   }
 
   return reply[1];
 }
 
 
-uint8_t command_erase_sector(uint32_t start_address, uint32_t end_address) {
+int command_erase_sector(uint32_t start_address, uint32_t end_address) {
   struct {
     uint8_t  cmd_id;
     uint32_t start_addr;
@@ -129,23 +129,23 @@ uint8_t command_erase_sector(uint32_t start_address, uint32_t end_address) {
     .end_addr   = end_address
   };
 
-  protocol_write_packet(sizeof(cmd), &cmd);
+  protocol_write_packet(sizeof(cmd), (uint8_t const*)&cmd);
   uint8_t buffer[4];
   int err = protocol_read_packet(sizeof(buffer), buffer);
   if(err != ERROR_NONE) {
-    return err;
+    return err | ERROR_LOCAL;
   }
   return buffer[1];
 }
 
 
-uint8_t command_erase_chip() {
+int command_erase_chip() {
   uint8_t cmd = CMD_erase_chip;
   protocol_write_packet(sizeof(cmd), &cmd);
   uint8_t buffer[4];
   int err = protocol_read_packet(sizeof(buffer), buffer);
   if(err != ERROR_NONE) {
-    return err;
+    return err | ERROR_LOCAL;
   }
   return buffer[1];
 }

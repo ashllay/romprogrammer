@@ -39,7 +39,7 @@ int open_serial(char const* device) {
 
   tio.c_cflag &= ~(CSIZE | CSTOPB | CRTSCTS);
   tio.c_cflag |= CS8 | CLOCAL | CREAD;
-  tio.c_iflag &= (IGNBRK | IXON | IXOFF | IXANY);
+  tio.c_iflag &= (IGNBRK); // | IXON | IXOFF | IXANY);
   tio.c_oflag = 0;
   tio.c_lflag = 0;
   tio.c_cc[VMIN] = 1;

@@ -49,7 +49,7 @@ int check_address_range(uint32_t start, uint32_t end) {
 }
 
 
-int cmd_ping(int argc, char **argv) {
+int cli_ping(int argc, char **argv) {
   ReplyPing ping;
   uint8_t err = command_ping(&ping);
 
@@ -66,7 +66,7 @@ int cmd_ping(int argc, char **argv) {
 }
 
 
-int cmd_id(int argc, char **argv) {
+int cli_id(int argc, char **argv) {
   ReplyIdentify identify;
   uint8_t err = command_identify(&identify);
 
@@ -81,7 +81,7 @@ int cmd_id(int argc, char **argv) {
 }
 
 
-int cmd_read(int argc, char **argv) {
+int cli_read(int argc, char **argv) {
   if(argc != 3) {
     fprintf(stderr, "Invalid arguments to 'read' command\n");
     return 1;
@@ -129,7 +129,7 @@ err:
 }
 
 
-int cmd_write(int argc, char **argv) {
+int cli_write(int argc, char **argv) {
   if(argc != 2) {
     fprintf(stderr, "Invalid arguments to 'write' command\n");
     return 1;
@@ -184,7 +184,7 @@ err:
 }
 
 
-int cmd_verify(int argc, char **argv) {
+int cli_verify(int argc, char **argv) {
   if(argc != 2) {
     fprintf(stderr, "Invalid arguments to 'verify' command\n");
     return 1;
@@ -246,7 +246,7 @@ err:
 }
 
 
-int cmd_crc(int argc, char **argv) {
+int cli_crc(int argc, char **argv) {
   if(argc != 2) {
     fprintf(stderr, "Invalid arguments to 'crc' command\n");
     return 1;
@@ -271,7 +271,7 @@ int cmd_crc(int argc, char **argv) {
 }
 
 
-int cmd_erase(int argc, char **argv) {
+int cli_erase(int argc, char **argv) {
   if((argc >= 1) && !strcmp(argv[0], "chip")) {
     uint8_t err = command_erase_chip();
 
@@ -324,13 +324,13 @@ typedef struct {
 } Command;
 
 static Command const commands[] = {
-  {"ping",   cmd_ping},
-  {"id",     cmd_id},
-  {"read",   cmd_read},
-  {"write",  cmd_write},
-  {"verify", cmd_verify},
-  {"crc",    cmd_crc},
-  {"erase",  cmd_erase},
+  {"ping",   cli_ping},
+  {"id",     cli_id},
+  {"read",   cli_read},
+  {"write",  cli_write},
+  {"verify", cli_verify},
+  {"crc",    cli_crc},
+  {"erase",  cli_erase},
   {NULL,     NULL}
 };
 
@@ -372,49 +372,9 @@ int main(int argc, char **argv) {
   error = func(argc-3, argv+3);
 
 err:
-  close_serial();
+//  close_serial();
 
 err2:
   return error;
 
-#if 0
-
-    ReplyCRC crc;
-    err2 = command_crc(0, 15, &crc);
-    printf("CRC:\n");
-    printf("  err: %4d\n", err2);
-    printf("  crc: %02X\n", crc.crc);
-
-
-
-    uint8_t data2[11] = "HALLO,FLO!";
-    uint8_t err2 = command_write(2*4096-5, 10, &data2);
-    printf("Write:\n");
-    printf("  err: %4d\n", err2);
-
-
-    int err2 = command_erase_chip();
-    printf("Erase Chip:\n");
-    printf("  err: %4d\n", err2);
-
-
-    int err2 = command_erase_sector(4096, 2*4096);
-    printf("Erase Sector:\n");
-    printf("  err: %4d\n", err2);
-
-    uint8_t data[128];
-    memset(data, 0, 128);
-    uint8_t err2 = command_read(4096*2-10, 128, data);
-    printf("Read:\n");
-    printf("  err: %d\n", err2);
-    printf("  data: ");
-    for(int i = 0; i < sizeof(data); ++i) {
-      if(i % 16 == 0) {
-        printf("\n    ");
-      }
-      printf("%02x ", data[i]);
-    }
-    printf("\n");
-
-#endif
 }
