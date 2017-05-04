@@ -1,7 +1,7 @@
 # romprogrammer
 Open Source Flash/EEPROM programmer
 
-This is an open source programmer for Flash/EEPROM chips. So far I've only tested it with (and hardcoded the software for) 2MBit JEDEC compatible Flash chips (and designed the board layout accordingly).
+This is an open source programmer for 8 bit-wide parallel Flash/EEPROM chips. So far I've only tested it with (and hardcoded the software for) 2MBit (256Kx8) JEDEC compatible Flash chips (and designed the board layout accordingly).
 
 Larger ROMs would require a redesign of the board, smaller ROMs require an adapter for the pinout.
 
