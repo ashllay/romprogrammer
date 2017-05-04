@@ -131,5 +131,5 @@ Here, startaddr and endaddr work the same way as in the other commands.
 ## License
 Copyright (c) 2017 Florian Keßeler
 
-The whole software and hardware is released under the terms of the [GNU General Public License version 2](http://www.gnu.de/documents/gpl-2.0.de.html).
+The whole software and hardware is released under the terms of the [GNU General Public License version 2](http://www.gnu.de/documents/gpl-2.0.en.html).
 
